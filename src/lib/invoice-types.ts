@@ -1,4 +1,9 @@
-export type InvoiceStatus = "draft" | "pending" | "paid" | "overdue" | "cancelled";
+export type InvoiceStatus =
+  | "draft"
+  | "pending"
+  | "paid"
+  | "overdue"
+  | "cancelled";
 
 export type Invoice = {
   referenceId: string;
@@ -10,4 +15,3 @@ export type Invoice = {
   payerEmail?: string;
   expiration?: string;
 };
-

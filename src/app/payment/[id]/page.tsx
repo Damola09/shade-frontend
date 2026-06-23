@@ -80,7 +80,9 @@ export default function PublicPaymentPage() {
             Loading invoice details...
           </p>
         </div>
-      ) : !invoice || invoice.status === "invalid" || invoice.status === "expired" ? (
+      ) : !invoice ||
+        invoice.status === "invalid" ||
+        invoice.status === "expired" ? (
         <InvalidInvoiceState
           message={
             invoice?.status === "expired"

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import * as Dialog from '@radix-ui/react-dialog';
-import { X, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import * as React from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { X, AlertTriangle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export interface InvoiceCancellationModalProps {
   open: boolean;
@@ -32,10 +32,11 @@ export function InvoiceCancellationModal({
               Cancel Invoice
             </Dialog.Title>
             <Dialog.Description className="text-sm text-slate-500">
-              Are you sure you want to cancel this invoice? This cannot be undone.
+              Are you sure you want to cancel this invoice? This cannot be
+              undone.
             </Dialog.Description>
           </div>
-          
+
           <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-4">
             <Dialog.Close asChild>
               <Button variant="outline" className="mt-2 sm:mt-0">
@@ -46,7 +47,7 @@ export function InvoiceCancellationModal({
               Confirm Cancellation
             </Button>
           </div>
-          
+
           <Dialog.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 data-[state=open]:text-slate-500">
             <X className="h-4 w-4" />
             <span className="sr-only">Close</span>

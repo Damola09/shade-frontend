@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import * as Tabs from '@radix-ui/react-tabs';
-import { cn } from '@/lib/utils';
+import * as React from "react";
+import * as Tabs from "@radix-ui/react-tabs";
+import { cn } from "@/lib/utils";
 
 export interface PaymentMethodTabsProps {
   walletContent: React.ReactNode;
@@ -31,14 +31,14 @@ export function PaymentMethodTabs({
           Manual Transfer
         </Tabs.Trigger>
       </Tabs.List>
-      
+
       <Tabs.Content
         value="wallet"
         className="mt-2 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2"
       >
         {walletContent}
       </Tabs.Content>
-      
+
       <Tabs.Content
         value="manual"
         className="mt-2 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2"

@@ -29,8 +29,7 @@ export function Sidebar() {
       <nav className="flex-1 overflow-y-auto px-3 py-4">
         <ul className="flex flex-col gap-0.5">
           {navItems.map(({ href, label, icon: Icon }) => {
-            const active =
-              pathname === href || pathname.startsWith(href + "/");
+            const active = pathname === href || pathname.startsWith(href + "/");
             return (
               <li key={href}>
                 <Link

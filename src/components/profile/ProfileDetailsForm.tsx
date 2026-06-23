@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useState } from 'react';
-import { ProfileDetailsFormData } from '@/types/profile';
-import { Button } from '@/components/ui/button';
+import * as React from "react";
+import { useState } from "react";
+import { ProfileDetailsFormData } from "@/types/profile";
+import { Button } from "@/components/ui/button";
 
 export interface ProfileDetailsFormProps {
   initialData: ProfileDetailsFormData;
@@ -18,7 +18,7 @@ export function ProfileDetailsForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -95,7 +95,7 @@ export function ProfileDetailsForm({
 
       <div className="flex justify-end">
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Saving...' : 'Save Changes'}
+          {isSubmitting ? "Saving..." : "Save Changes"}
         </Button>
       </div>
     </form>

@@ -44,7 +44,9 @@ export function GenerateApiKeyModal({
       await onSubmit(trimmed);
       onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to generate API key");
+      setError(
+        err instanceof Error ? err.message : "Failed to generate API key",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -112,11 +114,16 @@ export function GenerateApiKeyModal({
               placeholder="e.g. Production Backend"
               disabled={isSubmitting}
               className={`rounded-md border bg-background px-3 py-2 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60 text-foreground ${
-                error ? "border-destructive focus:ring-destructive" : "border-input focus:ring-ring"
+                error
+                  ? "border-destructive focus:ring-destructive"
+                  : "border-input focus:ring-ring"
               }`}
             />
             {error && (
-              <p role="alert" className="text-xs font-semibold text-destructive mt-0.5">
+              <p
+                role="alert"
+                className="text-xs font-semibold text-destructive mt-0.5"
+              >
                 {error}
               </p>
             )}

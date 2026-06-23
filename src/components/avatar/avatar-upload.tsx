@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ChangeEvent,
-  KeyboardEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { ImagePlus } from "lucide-react";
 
 import { cn } from "@/lib/utils";

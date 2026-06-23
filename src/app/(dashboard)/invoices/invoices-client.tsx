@@ -47,10 +47,14 @@ export function InvoicesClient() {
     })
     .sort((a, b) => {
       if (sortBy === "newest") {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
       }
       if (sortBy === "oldest") {
-        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        return (
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
       }
       if (sortBy === "amount-high") {
         return Number(b.amount) - Number(a.amount);
@@ -80,9 +84,7 @@ export function InvoicesClient() {
   return (
     <div className="flex flex-col gap-8">
       <InvoiceForm
-        onSubmit={(invoice) =>
-          setInvoices((current) => [invoice, ...current])
-        }
+        onSubmit={(invoice) => setInvoices((current) => [invoice, ...current])}
       />
       <section className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground">Your invoices</h2>
@@ -109,4 +111,3 @@ export function InvoicesClient() {
     </div>
   );
 }
-

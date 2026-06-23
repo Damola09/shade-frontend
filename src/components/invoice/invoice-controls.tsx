@@ -48,7 +48,10 @@ export function InvoiceControls({
       <div className="flex flex-wrap items-center gap-3">
         {/* Status Dropdown */}
         <div className="flex items-center gap-2">
-          <label htmlFor="status-filter" className="text-xs font-semibold text-muted-foreground uppercase tracking-wide hidden md:inline">
+          <label
+            htmlFor="status-filter"
+            className="text-xs font-semibold text-muted-foreground uppercase tracking-wide hidden md:inline"
+          >
             Status:
           </label>
           <select
@@ -67,7 +70,10 @@ export function InvoiceControls({
 
         {/* Sort Dropdown */}
         <div className="flex items-center gap-2">
-          <label htmlFor="sort-by" className="text-xs font-semibold text-muted-foreground uppercase tracking-wide hidden md:inline">
+          <label
+            htmlFor="sort-by"
+            className="text-xs font-semibold text-muted-foreground uppercase tracking-wide hidden md:inline"
+          >
             Sort by:
           </label>
           <select

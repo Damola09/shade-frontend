@@ -3,7 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, RefreshCw, Settings, X } from "lucide-react";
+import {
+  LayoutDashboard,
+  FileText,
+  RefreshCw,
+  Settings,
+  X,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 

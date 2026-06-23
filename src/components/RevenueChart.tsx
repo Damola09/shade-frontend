@@ -16,21 +16,29 @@ export interface RevenueDataPoint {
 }
 
 interface TooltipPayload {
-  value?: number;
+  value?: number | string | readonly (number | string)[];
 }
 
 interface CustomTooltipProps {
   active?: boolean;
-  payload?: TooltipPayload[];
+  payload?: readonly TooltipPayload[];
   label?: string;
 }
 
 function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (!active || !payload?.length) return null;
+
+  const value = payload[0].value;
+  const formattedValue = Array.isArray(value)
+    ? value.join(", ")
+    : typeof value === "number"
+      ? value.toLocaleString()
+      : value;
+
   return (
     <div className="rounded-md border bg-card px-3 py-2 text-sm shadow-md">
       <p className="font-medium text-card-foreground">{label}</p>
-      <p className="text-primary">{payload[0].value?.toLocaleString()} XLM</p>
+      <p className="text-primary">{formattedValue} XLM</p>
     </div>
   );
 }
@@ -51,9 +59,14 @@ interface RevenueChartProps {
 export default function RevenueChart({ data = MOCK_DATA }: RevenueChartProps) {
   return (
     <div className="rounded-lg border bg-card p-6 shadow-sm">
-      <h2 className="mb-4 text-lg font-bold text-card-foreground">Revenue Over Time</h2>
+      <h2 className="mb-4 text-lg font-bold text-card-foreground">
+        Revenue Over Time
+      </h2>
       <ResponsiveContainer width="100%" height={260}>
-        <AreaChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+        <AreaChart
+          data={data}
+          margin={{ top: 4, right: 8, left: 0, bottom: 0 }}
+        >
           <defs>
             <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.25} />
@@ -73,7 +86,15 @@ export default function RevenueChart({ data = MOCK_DATA }: RevenueChartProps) {
             tickLine={false}
             width={48}
           />
-          <Tooltip content={(props) => <CustomTooltip active={props.active} payload={props.payload} label={String(props.label ?? "")} />} />
+          <Tooltip
+            content={(props) => (
+              <CustomTooltip
+                active={props.active}
+                payload={props.payload}
+                label={String(props.label ?? "")}
+              />
+            )}
+          />
           <Area
             type="monotone"
             dataKey="amount"

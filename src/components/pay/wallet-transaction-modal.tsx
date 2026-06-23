@@ -6,7 +6,9 @@ interface WalletTransactionModalProps {
   isOpen: boolean;
 }
 
-export function WalletTransactionModal({ isOpen }: WalletTransactionModalProps) {
+export function WalletTransactionModal({
+  isOpen,
+}: WalletTransactionModalProps) {
   if (!isOpen) return null;
 
   return (

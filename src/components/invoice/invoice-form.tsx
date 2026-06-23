@@ -104,7 +104,9 @@ export function InvoiceForm({ onSubmit }: InvoiceFormProps) {
       noValidate
     >
       <div className="space-y-1">
-        <h2 className="text-xl font-bold tracking-tight text-foreground">Generate invoice</h2>
+        <h2 className="text-xl font-bold tracking-tight text-foreground">
+          Generate invoice
+        </h2>
         <p className="text-sm text-muted-foreground">
           Create a payable invoice your customer can settle on Stellar.
         </p>
@@ -116,7 +118,9 @@ export function InvoiceForm({ onSubmit }: InvoiceFormProps) {
           <h3 className="text-sm font-semibold tracking-wide text-foreground uppercase">
             Basic Details
           </h3>
-          <span className="text-[11px] font-medium text-indigo-500 bg-indigo-500/10 px-2 py-0.5 rounded-full">Required</span>
+          <span className="text-[11px] font-medium text-indigo-500 bg-indigo-500/10 px-2 py-0.5 rounded-full">
+            Required
+          </span>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -183,11 +187,15 @@ export function InvoiceForm({ onSubmit }: InvoiceFormProps) {
         {showAdvanced && (
           <div className="grid grid-cols-1 gap-4 pt-2 border-t border-border/20 animate-in fade-in-50 slide-in-from-top-2 duration-200">
             <label className="flex flex-col gap-1.5 text-sm">
-              <span className="font-medium text-foreground">Payer Email (optional)</span>
+              <span className="font-medium text-foreground">
+                Payer Email (optional)
+              </span>
               <input
                 type="email"
                 value={draft.payerEmail}
-                onChange={(event) => updateField("payerEmail", event.target.value)}
+                onChange={(event) =>
+                  updateField("payerEmail", event.target.value)
+                }
                 className={`rounded-md border bg-background px-3 py-2 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60 text-foreground ${
                   draft.payerEmail && !isEmailValid(draft.payerEmail)
                     ? "border-destructive focus:ring-destructive"
@@ -197,16 +205,22 @@ export function InvoiceForm({ onSubmit }: InvoiceFormProps) {
                 disabled={isSubmitting}
               />
               {draft.payerEmail && !isEmailValid(draft.payerEmail) && (
-                <span className="text-xs text-destructive">Please enter a valid email address</span>
+                <span className="text-xs text-destructive">
+                  Please enter a valid email address
+                </span>
               )}
             </label>
 
             <label className="flex flex-col gap-1.5 text-sm">
-              <span className="font-medium text-foreground">Expiration Date (optional)</span>
+              <span className="font-medium text-foreground">
+                Expiration Date (optional)
+              </span>
               <input
                 type="date"
                 value={draft.expiration}
-                onChange={(event) => updateField("expiration", event.target.value)}
+                onChange={(event) =>
+                  updateField("expiration", event.target.value)
+                }
                 className="rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-indigo-500 disabled:opacity-60 text-foreground"
                 disabled={isSubmitting}
               />
@@ -227,7 +241,10 @@ export function InvoiceForm({ onSubmit }: InvoiceFormProps) {
           className="rounded-md border border-emerald-300 bg-emerald-50 dark:bg-emerald-950/20 dark:border-emerald-900/50 px-3 py-2 text-sm text-emerald-900 dark:text-emerald-300 space-y-1"
         >
           <p>
-            Invoice <span className="font-mono font-semibold">{createdInvoice.referenceId}</span>{" "}
+            Invoice{" "}
+            <span className="font-mono font-semibold">
+              {createdInvoice.referenceId}
+            </span>{" "}
             generated successfully.
           </p>
           {createdInvoice.payerEmail && (
@@ -237,7 +254,8 @@ export function InvoiceForm({ onSubmit }: InvoiceFormProps) {
           )}
           {createdInvoice.expiration && (
             <p className="text-xs text-emerald-700 dark:text-emerald-400">
-              Expires: {new Date(createdInvoice.expiration).toLocaleDateString()}
+              Expires:{" "}
+              {new Date(createdInvoice.expiration).toLocaleDateString()}
             </p>
           )}
         </div>
@@ -261,4 +279,3 @@ export function InvoiceForm({ onSubmit }: InvoiceFormProps) {
     </form>
   );
 }
-

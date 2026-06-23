@@ -47,7 +47,7 @@ function createChallenge(address: string) {
 //   const keypair = Keypair.fromPublicKey(signerAddress);
 //   const messageBytes = Buffer.from(challenge, "utf8");
 //   const signatureBytes = Buffer.from(signedMessage, "base64");
-// 
+//
 //   return keypair.verify(messageBytes, signatureBytes);
 // }
 

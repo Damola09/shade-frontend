@@ -33,7 +33,10 @@ export type InvoiceCreateFormProps = {
   onDraft?: (draft: typeof initialDraft) => void;
 };
 
-export function InvoiceCreateForm({ onSubmit, onDraft }: InvoiceCreateFormProps) {
+export function InvoiceCreateForm({
+  onSubmit,
+  onDraft,
+}: InvoiceCreateFormProps) {
   const [draft, setDraft] = useState(initialDraft);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -128,9 +131,7 @@ export function InvoiceCreateForm({ onSubmit, onDraft }: InvoiceCreateFormProps)
           step="0.01"
           required
           aria-invalid={Boolean(errors.amount)}
-          aria-describedby={
-            errors.amount ? "invoice-amount-error" : undefined
-          }
+          aria-describedby={errors.amount ? "invoice-amount-error" : undefined}
           value={draft.amount}
           onChange={(event) => updateField("amount", event.target.value)}
           disabled={isSubmitting}
@@ -153,9 +154,7 @@ export function InvoiceCreateForm({ onSubmit, onDraft }: InvoiceCreateFormProps)
             errors.customerEmail ? "invoice-customer-email-error" : undefined
           }
           value={draft.customerEmail}
-          onChange={(event) =>
-            updateField("customerEmail", event.target.value)
-          }
+          onChange={(event) => updateField("customerEmail", event.target.value)}
           disabled={isSubmitting}
           className={inputClass(Boolean(errors.customerEmail))}
           placeholder="customer@example.com"
@@ -198,21 +197,21 @@ export function InvoiceCreateForm({ onSubmit, onDraft }: InvoiceCreateFormProps)
         )}
       </Button>
       <Button
-          type="button"
-          variant="secondary"
-          disabled={isSubmitting || isDrafting}
-          onClick={handleSaveDraft}
-          className="self-start"
-        >
-          {isDrafting ? (
-            <>
-              <Loader2 className="animate-spin" aria-hidden />
-              <span>Saving draft…</span>
-            </>
-          ) : (
-            "Save as draft"
-          )}
-        </Button>
+        type="button"
+        variant="secondary"
+        disabled={isSubmitting || isDrafting}
+        onClick={handleSaveDraft}
+        className="self-start"
+      >
+        {isDrafting ? (
+          <>
+            <Loader2 className="animate-spin" aria-hidden />
+            <span>Saving draft…</span>
+          </>
+        ) : (
+          "Save as draft"
+        )}
+      </Button>
     </form>
   );
 }

@@ -27,11 +27,7 @@ export function PaymentSuccess() {
           </p>
         </div>
 
-        <Button
-          type="button"
-          variant="outline"
-          className="bg-background"
-        >
+        <Button type="button" variant="outline" className="bg-background">
           <Download aria-hidden="true" />
           <span>Download Receipt</span>
         </Button>

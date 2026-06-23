@@ -44,10 +44,7 @@ export function SubscriptionPlanCard({
         className,
       )}
     >
-      <div
-        aria-hidden
-        className="absolute inset-y-0 left-0 w-1 bg-primary"
-      />
+      <div aria-hidden className="absolute inset-y-0 left-0 w-1 bg-primary" />
 
       <div className="pl-3">
         <div className="flex items-start justify-between gap-4">

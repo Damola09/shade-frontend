@@ -73,7 +73,11 @@ export interface TokenSelectorProps {
   disabled?: boolean;
 }
 
-export function TokenSelector({ value, onChange, disabled }: TokenSelectorProps) {
+export function TokenSelector({
+  value,
+  onChange,
+  disabled,
+}: TokenSelectorProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -81,7 +85,10 @@ export function TokenSelector({ value, onChange, disabled }: TokenSelectorProps)
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
@@ -106,17 +113,24 @@ export function TokenSelector({ value, onChange, disabled }: TokenSelectorProps)
         aria-expanded={isOpen}
         className={cn(
           "flex w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 text-left",
-          isOpen && "ring-2 ring-ring"
+          isOpen && "ring-2 ring-ring",
         )}
       >
         <span className="flex items-center gap-2">
           {selectedToken.icon}
-          <span className="font-medium text-foreground">{selectedToken.symbol}</span>
+          <span className="font-medium text-foreground">
+            {selectedToken.symbol}
+          </span>
           <span className="text-xs text-muted-foreground hidden sm:inline">
             ({selectedToken.name})
           </span>
         </span>
-        <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform duration-200", isOpen && "rotate-180")} />
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 text-muted-foreground transition-transform duration-200",
+            isOpen && "rotate-180",
+          )}
+        />
       </button>
 
       {isOpen && (
@@ -135,13 +149,16 @@ export function TokenSelector({ value, onChange, disabled }: TokenSelectorProps)
                 onClick={() => handleSelect(token.symbol)}
                 className={cn(
                   "relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-                  isSelected && "bg-accent/50 text-accent-foreground font-medium"
+                  isSelected &&
+                    "bg-accent/50 text-accent-foreground font-medium",
                 )}
               >
                 <span className="flex items-center gap-2">
                   {token.icon}
                   <span>{token.symbol}</span>
-                  <span className="text-xs text-muted-foreground">({token.name})</span>
+                  <span className="text-xs text-muted-foreground">
+                    ({token.name})
+                  </span>
                 </span>
                 {isSelected && (
                   <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
