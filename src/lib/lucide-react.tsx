@@ -47,6 +47,16 @@ export function AlertTriangle(props: IconProps) {
   );
 }
 
+export function AlertCircle(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 8v4" />
+      <path d="M12 16h.01" />
+    </IconBase>
+  );
+}
+
 export function Check(props: IconProps) {
   return (
     <IconBase {...props}>
@@ -317,6 +327,53 @@ export function Share2(props: IconProps) {
       <circle cx="18" cy="19" r="3" />
       <path d="M8.6 13.5 15.4 17.5" />
       <path d="M15.4 6.5 8.6 10.5" />
+    </IconBase>
+  );
+}
+
+export function Plus(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M12 5v14" />
+      <path d="M5 12h14" />
+    </IconBase>
+  );
+}
+
+export function MoreVertical(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="5" r="1.5" />
+      <circle cx="12" cy="12" r="1.5" />
+      <circle cx="12" cy="19" r="1.5" />
+    </IconBase>
+  );
+}
+
+export function Eye(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
+      <circle cx="12" cy="12" r="3" />
+    </IconBase>
+  );
+}
+
+export function Link(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M10 13a5 5 0 0 0 7.07 0l1.41-1.41a5 5 0 0 0-7.07-7.07L10 5" />
+      <path d="M14 11a5 5 0 0 0-7.07 0l-1.41 1.41a5 5 0 1 0 7.07 7.07L14 19" />
+    </IconBase>
+  );
+}
+
+export function Download(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M12 3v12" />
+      <path d="m7 10 5 5 5-5" />
+      <path d="M5 21h14" />
     </IconBase>
   );
 }
