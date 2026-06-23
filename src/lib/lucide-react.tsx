@@ -6,7 +6,10 @@ export type LucideIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
 type IconProps = React.SVGProps<SVGSVGElement>;
 
-function IconBase({ children, ...props }: IconProps & { children?: React.ReactNode }) {
+function IconBase({
+  children,
+  ...props
+}: IconProps & { children?: React.ReactNode }) {
   return (
     <svg
       width="24"
