@@ -77,8 +77,8 @@ export function BillingPlanForm({ onSubmit }: BillingPlanFormProps) {
       <div className="space-y-1">
         <h2 className="text-xl font-semibold">Create billing plan</h2>
         <p className="text-sm text-muted-foreground">
-          Define a recurring charge. Validate every field before activating
-          the plan.
+          Define a recurring charge. Validate every field before activating the
+          plan.
         </p>
       </div>
 
@@ -145,9 +145,7 @@ export function BillingPlanForm({ onSubmit }: BillingPlanFormProps) {
           id="plan-interval"
           required
           aria-invalid={Boolean(errors.interval)}
-          aria-describedby={
-            errors.interval ? "plan-interval-error" : undefined
-          }
+          aria-describedby={errors.interval ? "plan-interval-error" : undefined}
           value={draft.interval}
           onChange={(event) => updateField("interval", event.target.value)}
           disabled={isSubmitting}
@@ -175,9 +173,7 @@ export function BillingPlanForm({ onSubmit }: BillingPlanFormProps) {
             errors.customerEmail ? "plan-customer-email-error" : undefined
           }
           value={draft.customerEmail}
-          onChange={(event) =>
-            updateField("customerEmail", event.target.value)
-          }
+          onChange={(event) => updateField("customerEmail", event.target.value)}
           disabled={isSubmitting}
           className={inputClass(Boolean(errors.customerEmail))}
           placeholder="customer@example.com"

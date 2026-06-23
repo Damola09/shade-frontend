@@ -49,10 +49,7 @@ export function InvoiceTimeline({
                 className="z-10 mt-1 size-3 shrink-0 rounded-full border-2 border-primary bg-background"
               />
               {!isLast ? (
-                <span
-                  aria-hidden
-                  className="w-px flex-1 bg-border"
-                />
+                <span aria-hidden className="w-px flex-1 bg-border" />
               ) : null}
             </div>
             <div className="flex flex-col gap-0.5 pb-2">

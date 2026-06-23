@@ -25,14 +25,10 @@ function todayIso(): string {
 }
 
 export const invoiceCreateSchema = z.object({
-  amount: z
-    .coerce
+  amount: z.coerce
     .number({ invalid_type_error: "Amount must be a number" })
     .positive("Amount must be greater than zero"),
-  description: z
-    .string()
-    .trim()
-    .min(1, "Description is required"),
+  description: z.string().trim().min(1, "Description is required"),
   customerEmail: z
     .string()
     .trim()
@@ -58,7 +54,9 @@ export type InvoiceCreateInput = z.infer<typeof invoiceCreateSchema>;
  * for the parsed input or `{ ok: false, errors }` with a per-field
  * map ready to drive the red error text under each input.
  */
-export function validateInvoiceCreate(input: unknown):
+export function validateInvoiceCreate(
+  input: unknown,
+):
   | { ok: true; value: InvoiceCreateInput }
   | { ok: false; errors: Partial<Record<keyof InvoiceCreateInput, string>> } {
   const parsed = invoiceCreateSchema.safeParse(input);

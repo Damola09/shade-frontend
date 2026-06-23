@@ -18,4 +18,3 @@ export const navItems: NavItem[] = [
   { href: "/customers", label: "Customers", icon: Users },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
-

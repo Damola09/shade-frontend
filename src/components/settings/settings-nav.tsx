@@ -27,8 +27,7 @@ export function SettingsNav() {
     >
       {items.map(({ href, label, icon: Icon }) => {
         const isActive =
-          pathname === href ||
-          (pathname?.startsWith(href + "/") ?? false);
+          pathname === href || (pathname?.startsWith(href + "/") ?? false);
 
         return (
           <Link

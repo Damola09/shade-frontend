@@ -46,7 +46,9 @@ describe("BillingPlanForm", () => {
 
     await user.click(screen.getByRole("button", { name: /create plan/i }));
 
-    expect(await screen.findByText(/plan name is required/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/plan name is required/i),
+    ).toBeInTheDocument();
     expect(screen.getByText(/description is required/i)).toBeInTheDocument();
     expect(screen.getByText(/amount must be/i)).toBeInTheDocument();
     expect(handleSubmit).not.toHaveBeenCalled();
@@ -61,10 +63,7 @@ describe("BillingPlanForm", () => {
     await user.type(screen.getByLabelText(/plan name/i), "Starter");
     await user.type(screen.getByLabelText(/description/i), "Entry tier");
     await user.type(screen.getByLabelText(/^amount$/i), "0");
-    await user.type(
-      screen.getByLabelText(/customer email/i),
-      "not-an-email",
-    );
+    await user.type(screen.getByLabelText(/customer email/i), "not-an-email");
 
     await user.click(screen.getByRole("button", { name: /create plan/i }));
 
@@ -86,6 +85,8 @@ describe("BillingPlanForm", () => {
     ).toBeInTheDocument();
 
     await user.type(screen.getByLabelText(/plan name/i), "Pro");
-    expect(screen.queryByText(/plan name is required/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/plan name is required/i),
+    ).not.toBeInTheDocument();
   });
 });

@@ -26,10 +26,7 @@ export function InvoicePagination({
 
   return (
     <div
-      className={cn(
-        "flex items-center justify-between gap-4 px-1",
-        className,
-      )}
+      className={cn("flex items-center justify-between gap-4 px-1", className)}
     >
       <p className="text-sm text-muted-foreground" aria-live="polite">
         Page {page} of {pageCount}

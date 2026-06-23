@@ -71,9 +71,7 @@ export function ApiKeyTable({
                   {formatDate(apiKey.createdAt)}
                 </td>
                 <td className="px-4 py-3 text-muted-foreground">
-                  {apiKey.lastUsedAt
-                    ? formatDate(apiKey.lastUsedAt)
-                    : "Never"}
+                  {apiKey.lastUsedAt ? formatDate(apiKey.lastUsedAt) : "Never"}
                 </td>
                 <td className="px-4 py-3 text-right">
                   <Button

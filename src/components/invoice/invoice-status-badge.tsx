@@ -3,8 +3,7 @@ import type { InvoiceStatus } from "@/lib/invoice-types";
 
 const statusStyles: Record<InvoiceStatus, string> = {
   paid: "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-300",
-  pending:
-    "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300",
+  pending: "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300",
   cancelled: "bg-red-100 text-red-900 dark:bg-red-950 dark:text-red-300",
   draft: "bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300",
   overdue: "bg-rose-100 text-rose-900 dark:bg-rose-950 dark:text-rose-300",
@@ -23,7 +22,10 @@ type InvoiceStatusBadgeProps = {
   className?: string;
 };
 
-export function InvoiceStatusBadge({ status, className }: InvoiceStatusBadgeProps) {
+export function InvoiceStatusBadge({
+  status,
+  className,
+}: InvoiceStatusBadgeProps) {
   return (
     <span
       className={cn(

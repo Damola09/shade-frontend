@@ -18,7 +18,11 @@ type InvoiceTableProps = {
   emptyState?: React.ReactNode;
 };
 
-export function InvoiceTable({ invoices, className, emptyState }: InvoiceTableProps) {
+export function InvoiceTable({
+  invoices,
+  className,
+  emptyState,
+}: InvoiceTableProps) {
   return (
     <div
       className={cn(

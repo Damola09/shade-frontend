@@ -10,7 +10,12 @@
 
 import { z } from "zod";
 
-export const billingIntervals = ["daily", "weekly", "monthly", "yearly"] as const;
+export const billingIntervals = [
+  "daily",
+  "weekly",
+  "monthly",
+  "yearly",
+] as const;
 
 export type BillingInterval = (typeof billingIntervals)[number];
 
@@ -22,21 +27,14 @@ export const billingIntervalLabels: Record<BillingInterval, string> = {
 };
 
 export const billingPlanCreateSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(1, "Plan name is required"),
-  amount: z
-    .coerce
+  name: z.string().trim().min(1, "Plan name is required"),
+  amount: z.coerce
     .number({ invalid_type_error: "Amount must be a number" })
     .positive("Amount must be greater than zero"),
   interval: z.enum(billingIntervals, {
     errorMap: () => ({ message: "Select a billing interval" }),
   }),
-  description: z
-    .string()
-    .trim()
-    .min(1, "Description is required"),
+  description: z.string().trim().min(1, "Description is required"),
   customerEmail: z
     .string()
     .trim()
@@ -54,7 +52,10 @@ export type BillingPlanCreateInput = z.infer<typeof billingPlanCreateSchema>;
  */
 export function validateBillingPlanCreate(input: unknown):
   | { ok: true; value: BillingPlanCreateInput }
-  | { ok: false; errors: Partial<Record<keyof BillingPlanCreateInput, string>> } {
+  | {
+      ok: false;
+      errors: Partial<Record<keyof BillingPlanCreateInput, string>>;
+    } {
   const parsed = billingPlanCreateSchema.safeParse(input);
   if (parsed.success) return { ok: true, value: parsed.data };
   const errors: Partial<Record<keyof BillingPlanCreateInput, string>> = {};

@@ -47,9 +47,7 @@ describe("SubscriberTable", () => {
   });
 
   it("renders a custom empty state when provided", () => {
-    render(
-      <SubscriberTable subscribers={[]} emptyState="Nobody here." />,
-    );
+    render(<SubscriberTable subscribers={[]} emptyState="Nobody here." />);
 
     expect(screen.getByText("Nobody here.")).toBeInTheDocument();
   });

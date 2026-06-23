@@ -62,8 +62,10 @@ export function PayManualTransferView({
         <div>
           <p className="font-semibold mb-1">Important: Exact Amount Required</p>
           <p>
-            You must send the <strong>exact</strong> token amount shown below on the Stellar network.
-            Sending a different amount or using a different network may result in permanent loss of funds or a failed transaction.
+            You must send the <strong>exact</strong> token amount shown below on
+            the Stellar network. Sending a different amount or using a different
+            network may result in permanent loss of funds or a failed
+            transaction.
           </p>
         </div>
       </div>
