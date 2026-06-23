@@ -87,6 +87,22 @@ export function ChevronDown(props: IconProps) {
   );
 }
 
+export function ChevronLeft(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="m15 18-6-6 6-6" />
+    </IconBase>
+  );
+}
+
+export function ChevronRight(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="m9 18 6-6-6-6" />
+    </IconBase>
+  );
+}
+
 export function ClipboardCopy(props: IconProps) {
   return (
     <IconBase {...props}>
@@ -176,6 +192,15 @@ export function UserCircle(props: IconProps) {
       <circle cx="12" cy="12" r="10" />
       <circle cx="12" cy="10" r="3" />
       <path d="M6.5 19a6 6 0 0 1 11 0" />
+    </IconBase>
+  );
+}
+
+export function UserRound(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M6 20a6 6 0 0 1 12 0" />
     </IconBase>
   );
 }
@@ -289,6 +314,82 @@ export function Share2(props: IconProps) {
       <circle cx="18" cy="19" r="3" />
       <path d="M8.6 13.5 15.4 17.5" />
       <path d="M15.4 6.5 8.6 10.5" />
+    </IconBase>
+  );
+}
+
+export function Building2(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M6 22V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16" />
+      <path d="M2 22h20" />
+      <path d="M10 6V2h4v4" />
+      <path d="M10 10h1" />
+      <path d="M13 10h1" />
+      <path d="M10 14h1" />
+      <path d="M13 14h1" />
+      <path d="M10 18h4" />
+    </IconBase>
+  );
+}
+
+export function MailCheck(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M22 6 12 13 2 6" />
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m9 12 2 2 4-4" />
+    </IconBase>
+  );
+}
+
+export function Menu(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M4 6h16" />
+      <path d="M4 12h16" />
+      <path d="M4 18h16" />
+    </IconBase>
+  );
+}
+
+export function LogOut(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <path d="m16 17 5-5-5-5" />
+      <path d="M21 12H9" />
+    </IconBase>
+  );
+}
+
+export function LayoutDashboard(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <rect x="3" y="3" width="7" height="8" rx="1" />
+      <rect x="14" y="3" width="7" height="5" rx="1" />
+      <rect x="14" y="12" width="7" height="9" rx="1" />
+      <rect x="3" y="15" width="7" height="6" rx="1" />
+    </IconBase>
+  );
+}
+
+export function RefreshCw(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M21 2v6h-6" />
+      <path d="M3 22v-6h6" />
+      <path d="M20 8a9 9 0 0 0-15-3L3 8" />
+      <path d="M4 16a9 9 0 0 0 15 3l2-3" />
+    </IconBase>
+  );
+}
+
+export function Settings(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="12" r="3" />
+      <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9c0 .7.4 1.3 1 1.5h.2a2 2 0 1 1 0 4H21c-.7 0-1.3.4-1.6 1Z" />
     </IconBase>
   );
 }
