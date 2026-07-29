@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   getMerchantSessionAddress,
   saveMerchantProfile,
@@ -329,8 +330,7 @@ export function RegisterClient() {
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="grid gap-2 text-sm font-medium">
                 First name
-                <input
-                  className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                <Input
                   value={values.firstName}
                   onChange={(event) =>
                     updateField("firstName", event.target.value)
@@ -340,8 +340,7 @@ export function RegisterClient() {
               </label>
               <label className="grid gap-2 text-sm font-medium">
                 Last name
-                <input
-                  className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                <Input
                   value={values.lastName}
                   onChange={(event) =>
                     updateField("lastName", event.target.value)
@@ -351,8 +350,7 @@ export function RegisterClient() {
               </label>
               <label className="grid gap-2 text-sm font-medium sm:col-span-2">
                 Email address
-                <input
-                  className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                <Input
                   type="email"
                   inputMode="email"
                   autoComplete="email"
