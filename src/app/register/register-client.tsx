@@ -23,6 +23,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   getMerchantSessionAddress,
   saveMerchantProfile,
@@ -404,8 +405,7 @@ export function RegisterClient() {
               </label>
               <label className="grid gap-2 text-sm font-medium">
                 Business description
-                <textarea
-                  className="min-h-28 rounded-md border bg-background px-3 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                <Textarea
                   value={values.businessDescription}
                   onChange={(event) =>
                     updateField("businessDescription", event.target.value)
