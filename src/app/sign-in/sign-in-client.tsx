@@ -1,138 +1,25 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { BadgeCheck, Loader2, WalletCards } from "lucide-react";
+import { BadgeCheck, WalletCards } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
-import {
-  getMerchantProfile,
-  MERCHANT_SESSION_KEY,
-} from "@/lib/merchant-storage";
-
-type AuthStatus = "idle" | "connecting" | "signing" | "verified" | "error";
-
-type WalletSession = {
-  address: string;
-  challenge: string;
-  signature: string;
-  signedAt: string;
-};
-
-function createChallenge(address: string) {
-  const issuedAt = new Date().toISOString();
-  const nonce =
-    typeof crypto !== "undefined" && "randomUUID" in crypto
-      ? crypto.randomUUID()
-      : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-
-  return [
-    "Shade Merchant Sign In",
-    "",
-    "Sign this message to prove you control this Stellar wallet.",
-    "This request will not move funds or create a transaction.",
-    "",
-    `Wallet: ${address}`,
-    `Nonce: ${nonce}`,
-    `Issued At: ${issuedAt}`,
-  ].join("\n");
-}
-
-// async function verifySignedMessage(
-//   challenge: string,
-//   signedMessage: string,
-//   signerAddress: string,
-// ) {
-//   const { Keypair } = await import("@stellar/stellar-sdk");
-//   const keypair = Keypair.fromPublicKey(signerAddress);
-//   const messageBytes = Buffer.from(challenge, "utf8");
-//   const signatureBytes = Buffer.from(signedMessage, "base64");
-//
-//   return keypair.verify(messageBytes, signatureBytes);
-// }
+import { WalletConnectButton } from "@/components/wallet-connect-button";
+import { useWalletConnect } from "@/hooks/use-wallet-connect";
+import { getMerchantProfile } from "@/lib/merchant-storage";
 
 export function SignInClient() {
   const router = useRouter();
-  const [status, setStatus] = useState<AuthStatus>("idle");
-  const [error, setError] = useState<string | null>(null);
-  const [session, setSession] = useState<WalletSession | null>(null);
-
-  const buttonLabel = useMemo(() => {
-    if (status === "connecting") return "Connecting wallet";
-    if (status === "signing") return "Waiting for signature";
-    if (status === "verified") return "Wallet verified";
-    return "Connect wallet to sign in";
-  }, [status]);
+  const { status, error, session, connect } = useWalletConnect();
 
   async function handleSignIn() {
-    setError(null);
-    setSession(null);
-    setStatus("connecting");
+    const nextSession = await connect();
 
-    try {
-      const { StellarWalletsKit, Networks } =
-        await import("@creit.tech/stellar-wallets-kit");
-      const { defaultModules } =
-        await import("@creit.tech/stellar-wallets-kit/modules/utils");
-      const { FREIGHTER_ID } =
-        await import("@creit.tech/stellar-wallets-kit/modules/freighter");
-
-      StellarWalletsKit.init({
-        network: Networks.TESTNET,
-        selectedWalletId: FREIGHTER_ID,
-        modules: defaultModules(),
-      });
-
-      const { address } = await StellarWalletsKit.authModal();
-
-      if (!address) {
-        throw new Error("No wallet address was returned by the wallet.");
-      }
-
-      const challenge = createChallenge(address);
-
-      setStatus("signing");
-
-      const signature = await StellarWalletsKit.signMessage(challenge, {
-        address,
-        networkPassphrase: Networks.TESTNET,
-      });
-
-      // if (!signature.signedMessage) {
-      //   throw new Error("The wallet did not return a signed message.");
-      // }
-
-      // const verified = await verifySignedMessage(
-      //   challenge,
-      //   signature.signedMessage,
-      //   signature.signerAddress ?? address,
-      // );
-
-      // if (!verified) {
-      //   throw new Error("Signature verification failed. Please try again.");
-      // }
-
-      const nextSession = {
-        address,
-        challenge,
-        signature: signature.signedMessage,
-        signedAt: new Date().toISOString(),
-      };
-
-      sessionStorage.setItem(MERCHANT_SESSION_KEY, JSON.stringify(nextSession));
-      setSession(nextSession);
-      setStatus("verified");
-
-      const profile = getMerchantProfile(address);
-      router.push(profile?.emailVerified ? "/dashboard" : "/register");
-    } catch (signInError) {
-      setStatus("error");
-      setError(
-        signInError instanceof Error
-          ? signInError.message
-          : "Unable to verify the connected wallet.",
-      );
+    if (!nextSession) {
+      return;
     }
+
+    const profile = getMerchantProfile(nextSession.address);
+    router.push(profile?.emailVerified ? "/dashboard" : "/register");
   }
 
   return (
@@ -167,21 +54,7 @@ export function SignInClient() {
             </div>
           ) : null}
 
-          <Button
-            className="w-full"
-            size="lg"
-            onClick={handleSignIn}
-            disabled={status === "connecting" || status === "signing"}
-          >
-            {status === "connecting" || status === "signing" ? (
-              <Loader2 className="animate-spin" />
-            ) : status === "verified" ? (
-              <BadgeCheck />
-            ) : (
-              <WalletCards />
-            )}
-            {buttonLabel}
-          </Button>
+          <WalletConnectButton status={status} onClick={handleSignIn} />
         </div>
       </section>
     </main>
