@@ -65,14 +65,14 @@ describe("Button", () => {
   it("renders the child element instead of a button when asChild is set", () => {
     render(
       <Button asChild variant="link">
-        <a href="/invoices">Invoices</a>
+        <a href="https://example.com/invoices">Invoices</a>
       </Button>,
     );
 
     const link = screen.getByRole("link", { name: "Invoices" });
 
     expect(link.tagName).toBe("A");
-    expect(link).toHaveAttribute("href", "/invoices");
+    expect(link).toHaveAttribute("href", "https://example.com/invoices");
     expect(link).toHaveClass("text-primary");
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
@@ -82,7 +82,7 @@ describe("Button", () => {
 
     render(
       <Button asChild onClick={handleClick}>
-        <a href="/dashboard">Dashboard</a>
+        <a href="https://example.com/dashboard">Dashboard</a>
       </Button>,
     );
 
