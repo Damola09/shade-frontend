@@ -5,7 +5,6 @@ import {
   ClipboardEvent,
   FormEvent,
   KeyboardEvent,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -21,11 +20,11 @@ import {
   UserRound,
 } from "lucide-react";
 
+import { FormErrorBanner } from "@/components/form-error-banner";
+import { Stepper } from "@/components/stepper";
 import { Button } from "@/components/ui/button";
-import {
-  getMerchantSessionAddress,
-  saveMerchantProfile,
-} from "@/lib/merchant-storage";
+import { useMerchantSession } from "@/hooks/use-merchant-session";
+import { saveMerchantProfile } from "@/lib/merchant-storage";
 
 type FormValues = {
   firstName: string;
@@ -96,9 +95,9 @@ function readLogo(file: File) {
 
 export function RegisterClient() {
   const router = useRouter();
+  const { walletAddress } = useMerchantSession();
   const otpInputRefs = useRef<Array<HTMLInputElement | null>>([]);
   const [step, setStep] = useState<Step>(1);
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [values, setValues] = useState<FormValues>(initialValues);
   const [otpCode, setOtpCode] = useState("");
   const [otpInput, setOtpInput] = useState("");
@@ -125,17 +124,6 @@ export function RegisterClient() {
 
     return otpInput.length === 6;
   }, [otpInput.length, step, values]);
-
-  useEffect(() => {
-    const address = getMerchantSessionAddress();
-
-    if (!address) {
-      router.replace("/sign-in");
-      return;
-    }
-
-    setWalletAddress(address);
-  }, [router]);
 
   function updateField(field: keyof FormValues, value: string) {
     setError(null);
@@ -289,21 +277,7 @@ export function RegisterClient() {
           </p>
         </div>
 
-        <div className="mb-6 grid grid-cols-3 gap-3">
-          {stepMeta.map((item) => (
-            <div
-              key={item.step}
-              className={`rounded-lg border p-3 ${
-                step === item.step
-                  ? "border-primary bg-secondary text-primary"
-                  : "bg-card text-muted-foreground"
-              }`}
-            >
-              <item.icon className="size-4" />
-              <p className="mt-2 text-sm font-semibold">{item.label}</p>
-            </div>
-          ))}
-        </div>
+        <Stepper steps={stepMeta} currentStep={step} />
 
         <form
           onSubmit={handleSubmit}
@@ -457,11 +431,7 @@ export function RegisterClient() {
             </div>
           ) : null}
 
-          {error ? (
-            <div className="mt-5 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-              {error}
-            </div>
-          ) : null}
+          <FormErrorBanner message={error} className="mt-5" />
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-between">
             <Button

@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Moon, Sun, Wallet } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 
+import { DisconnectWalletMenu } from "@/components/disconnect-wallet-menu";
 import { MobileNav } from "@/components/MobileNav";
 import { useTheme } from "@/components/ThemeProvider";
 import { getMerchantSessionAddress } from "@/lib/merchant-storage";
-
-function truncateAddress(address: string): string {
-  if (address.length <= 10) return address;
-  return `${address.slice(0, 4)}...${address.slice(-4)}`;
-}
 
 export function Topbar() {
   const { isDark, toggleTheme } = useTheme();
@@ -28,12 +24,7 @@ export function Topbar() {
 
       <div className="flex items-center gap-3">
         {walletAddress ? (
-          <div className="flex items-center gap-2 rounded-md border bg-secondary/60 px-3 py-1.5">
-            <Wallet className="size-3.5 shrink-0 text-muted-foreground" />
-            <span className="font-mono text-xs font-medium text-secondary-foreground">
-              {truncateAddress(walletAddress)}
-            </span>
-          </div>
+          <DisconnectWalletMenu walletAddress={walletAddress} />
         ) : null}
 
         <button
