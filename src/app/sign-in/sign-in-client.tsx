@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { BadgeCheck, Loader2, WalletCards } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   getMerchantProfile,
@@ -150,9 +151,9 @@ export function SignInClient() {
 
         <div className="rounded-lg border bg-card p-6 shadow-sm">
           {error ? (
-            <div className="mb-4 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-              {error}
-            </div>
+            <Alert variant="destructive" className="mb-4">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
           ) : null}
 
           {session ? (
