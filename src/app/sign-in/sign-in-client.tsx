@@ -5,6 +5,7 @@ import { BadgeCheck, Loader2, WalletCards } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   getMerchantProfile,
   MERCHANT_SESSION_KEY,
@@ -148,7 +149,7 @@ export function SignInClient() {
           </p>
         </div>
 
-        <div className="rounded-lg border bg-card p-6 shadow-sm">
+        <Card>
           {error ? (
             <div className="mb-4 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
               {error}
@@ -182,7 +183,7 @@ export function SignInClient() {
             )}
             {buttonLabel}
           </Button>
-        </div>
+        </Card>
       </section>
     </main>
   );
