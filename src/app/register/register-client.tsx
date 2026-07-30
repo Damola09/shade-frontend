@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { useRegistrationDraft } from "@/hooks/use-registration-draft";
 import {
   getMerchantSessionAddress,
   saveMerchantProfile,
@@ -48,6 +49,64 @@ const initialValues: FormValues = {
   businessCategory: "",
   businessDescription: "",
 };
+
+/**
+ * The business logo is a base64 data URL and can be megabytes large, so it is
+ * left out of the draft to stay well inside the sessionStorage quota.
+ */
+type DraftValues = Omit<FormValues, "businessLogo">;
+
+type RegistrationDraft = {
+  step: Step;
+  values: DraftValues;
+};
+
+const draftFields: Array<keyof DraftValues> = [
+  "firstName",
+  "lastName",
+  "email",
+  "businessName",
+  "businessCategory",
+  "businessDescription",
+];
+
+function parseRegistrationDraft(value: unknown): RegistrationDraft | null {
+  if (typeof value !== "object" || value === null) {
+    return null;
+  }
+
+  const candidate = value as {
+    step?: unknown;
+    values?: Record<string, unknown>;
+  };
+
+  if (typeof candidate.values !== "object" || candidate.values === null) {
+    return null;
+  }
+
+  const values: DraftValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    businessName: "",
+    businessCategory: "",
+    businessDescription: "",
+  };
+
+  for (const field of draftFields) {
+    const fieldValue = candidate.values[field];
+
+    if (typeof fieldValue === "string") {
+      values[field] = fieldValue;
+    }
+  }
+
+  // Step 3 depends on an OTP that is only issued during the current attempt,
+  // so a restored draft never resumes past the business details step.
+  const step: Step = candidate.step === 2 ? 2 : 1;
+
+  return { step, values };
+}
 
 const categories = [
   "E-commerce",
@@ -97,9 +156,17 @@ function readLogo(file: File) {
 export function RegisterClient() {
   const router = useRouter();
   const otpInputRefs = useRef<Array<HTMLInputElement | null>>([]);
-  const [step, setStep] = useState<Step>(1);
+  const { restoredDraft, saveDraft, clearDraft } =
+    useRegistrationDraft<RegistrationDraft>({
+      validate: parseRegistrationDraft,
+    });
+  const [step, setStep] = useState<Step>(restoredDraft?.step ?? 1);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
-  const [values, setValues] = useState<FormValues>(initialValues);
+  const [values, setValues] = useState<FormValues>(() =>
+    restoredDraft
+      ? { ...initialValues, ...restoredDraft.values }
+      : initialValues,
+  );
   const [otpCode, setOtpCode] = useState("");
   const [otpInput, setOtpInput] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -136,6 +203,20 @@ export function RegisterClient() {
 
     setWalletAddress(address);
   }, [router]);
+
+  useEffect(() => {
+    saveDraft({
+      step,
+      values: {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        businessName: values.businessName,
+        businessCategory: values.businessCategory,
+        businessDescription: values.businessDescription,
+      },
+    });
+  }, [saveDraft, step, values]);
 
   function updateField(field: keyof FormValues, value: string) {
     setError(null);
@@ -264,6 +345,7 @@ export function RegisterClient() {
       createdAt: new Date().toISOString(),
     });
 
+    clearDraft();
     setIsComplete(true);
     router.push("/dashboard");
   }
