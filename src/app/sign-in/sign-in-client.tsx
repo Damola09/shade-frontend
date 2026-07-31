@@ -3,6 +3,7 @@
 import { BadgeCheck, WalletCards } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { FormErrorBanner } from "@/components/form-error-banner";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -83,6 +84,8 @@ export function SignInClient() {
           </p>
         </div>
 
+        <div className="rounded-lg border bg-card p-6 shadow-sm">
+          <FormErrorBanner message={error} className="mb-4" />
         <Card>
           {error ? (
             <Alert variant="destructive" className="mb-4">

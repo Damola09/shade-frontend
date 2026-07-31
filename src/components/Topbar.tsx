@@ -1,9 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { Moon, Sun } from "lucide-react";
 import { Moon, Sun, Wallet } from "lucide-react";
 
+import { DisconnectWalletMenu } from "@/components/disconnect-wallet-menu";
 import { MobileNav } from "@/components/MobileNav";
 import { useTheme } from "@/components/ThemeProvider";
+import { getMerchantSessionAddress } from "@/lib/merchant-storage";
 import { WalletAddressBadge } from "@/components/wallet-address-badge";
 import { useMerchantSession } from "@/hooks/use-merchant-session";
 
@@ -19,6 +23,7 @@ export function Topbar() {
 
       <div className="flex items-center gap-3">
         {walletAddress ? (
+          <DisconnectWalletMenu walletAddress={walletAddress} />
           <div className="flex items-center gap-2">
             <Wallet className="size-3.5 shrink-0 text-muted-foreground" />
             <WalletAddressBadge
