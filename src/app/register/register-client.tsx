@@ -25,6 +25,14 @@ import { Stepper } from "@/components/stepper";
 import { Button } from "@/components/ui/button";
 import { useMerchantSession } from "@/hooks/use-merchant-session";
 import { saveMerchantProfile } from "@/lib/merchant-storage";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  getMerchantSessionAddress,
+  saveMerchantProfile,
+} from "@/lib/merchant-storage";
 
 type FormValues = {
   firstName: string;
@@ -57,6 +65,11 @@ const categories = [
   "Nonprofit",
   "Other",
 ];
+
+const categoryOptions = categories.map((category) => ({
+  value: category,
+  label: category,
+}));
 
 const stepMeta = [
   {
@@ -279,14 +292,23 @@ export function RegisterClient() {
 
         <Stepper steps={stepMeta} currentStep={step} />
 
-        <form
-          onSubmit={handleSubmit}
-          className="rounded-lg border bg-card p-6 shadow-sm"
-        >
-          <div className="mb-6 flex items-center gap-3">
-            {activeStep ? (
-              <div className="flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <activeStep.icon className="size-5" />
+        <Card asChild>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-6 flex items-center gap-3">
+              {activeStep ? (
+                <div className="flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <activeStep.icon className="size-5" />
+                </div>
+              ) : null}
+              <div>
+                <p className="text-lg font-bold">
+                  {step === 1 && "Personal details"}
+                  {step === 2 && "Business details"}
+                  {step === 3 && "Email verification"}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Step {step} of 3
+                </p>
               </div>
             ) : null}
             <div>
@@ -303,8 +325,7 @@ export function RegisterClient() {
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="grid gap-2 text-sm font-medium">
                 First name
-                <input
-                  className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                <Input
                   value={values.firstName}
                   onChange={(event) =>
                     updateField("firstName", event.target.value)
@@ -314,8 +335,7 @@ export function RegisterClient() {
               </label>
               <label className="grid gap-2 text-sm font-medium">
                 Last name
-                <input
-                  className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                <Input
                   value={values.lastName}
                   onChange={(event) =>
                     updateField("lastName", event.target.value)
@@ -325,8 +345,7 @@ export function RegisterClient() {
               </label>
               <label className="grid gap-2 text-sm font-medium sm:col-span-2">
                 Email address
-                <input
-                  className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                <Input
                   type="email"
                   inputMode="email"
                   autoComplete="email"
@@ -380,8 +399,7 @@ export function RegisterClient() {
               </label>
               <label className="grid gap-2 text-sm font-medium">
                 Business description
-                <textarea
-                  className="min-h-28 rounded-md border bg-background px-3 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                <Textarea
                   value={values.businessDescription}
                   onChange={(event) =>
                     updateField("businessDescription", event.target.value)
@@ -390,48 +408,103 @@ export function RegisterClient() {
                 />
               </label>
             </div>
-          ) : null}
 
-          {step === 3 ? (
-            <div className="grid gap-4">
-              <div className="rounded-lg border bg-secondary/60 p-4 text-sm text-muted-foreground">
-                A verification code was sent to{" "}
-                <span className="font-semibold text-foreground">
-                  {values.email}
-                </span>
-                . Demo code:{" "}
-                <span className="font-mono font-bold text-primary">
-                  {otpCode}
-                </span>
+            {step === 1 ? (
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="grid gap-2 text-sm font-medium">
+                  First name
+                  <input
+                    className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    value={values.firstName}
+                    onChange={(event) =>
+                      updateField("firstName", event.target.value)
+                    }
+                    required
+                  />
+                </label>
+                <label className="grid gap-2 text-sm font-medium">
+                  Last name
+                  <input
+                    className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    value={values.lastName}
+                    onChange={(event) =>
+                      updateField("lastName", event.target.value)
+                    }
+                    required
+                  />
+                </label>
+                <label className="grid gap-2 text-sm font-medium sm:col-span-2">
+                  Email address
+                  <input
+                    className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    value={values.email}
+                    onChange={(event) =>
+                      updateField("email", event.target.value)
+                    }
+                    required
+                  />
+                </label>
               </div>
-              <label className="grid gap-2 text-sm font-medium">
-                OTP code
-                <div className="grid w-fit max-w-full grid-cols-6 gap-2">
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <input
-                      key={index}
-                      ref={(element) => {
-                        otpInputRefs.current[index] = element;
-                      }}
-                      aria-label={`OTP digit ${index + 1}`}
-                      className="size-11 rounded-md border bg-background text-center font-mono text-lg font-semibold outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 sm:size-12"
-                      inputMode="numeric"
-                      maxLength={1}
-                      value={otpInput[index] ?? ""}
-                      onChange={(event) =>
-                        updateOtpDigit(index, event.target.value)
-                      }
-                      onKeyDown={(event) => handleOtpKeyDown(index, event)}
-                      onPaste={handleOtpPaste}
-                      required
-                    />
-                  ))}
+            ) : null}
+
+            {step === 2 ? (
+              <div className="grid gap-4">
+                <label className="grid gap-2 text-sm font-medium">
+                  Business name
+                  <input
+                    className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    value={values.businessName}
+                    onChange={(event) =>
+                      updateField("businessName", event.target.value)
+                    }
+                    required
+                  />
+                </label>
+                <label className="grid gap-2 text-sm font-medium">
+                  Business logo
+                  <input
+                    className="rounded-md border bg-background px-3 py-2 text-sm outline-none file:mr-3 file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-2 file:text-sm file:font-semibold file:text-primary"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoChange}
+                  />
+                </label>
+                <div className="grid gap-2 text-sm font-medium">
+                  <label htmlFor="businessCategory">Business category</label>
+                  <Select
+                    id="businessCategory"
+                    options={categoryOptions}
+                    value={values.businessCategory}
+                    onValueChange={(value) =>
+                      updateField("businessCategory", value)
+                    }
+                    placeholder="Select category"
+                    required
+                  />
                 </div>
-              </label>
-            </div>
-          ) : null}
+                <label className="grid gap-2 text-sm font-medium">
+                  Business description
+                  <textarea
+                    className="min-h-28 rounded-md border bg-background px-3 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    value={values.businessDescription}
+                    onChange={(event) =>
+                      updateField("businessDescription", event.target.value)
+                    }
+                    required
+                  />
+                </label>
+              </div>
+            ) : null}
 
           <FormErrorBanner message={error} className="mt-5" />
+          {error ? (
+            <Alert variant="destructive" className="mt-5">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          ) : null}
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-between">
             <Button
@@ -444,24 +517,36 @@ export function RegisterClient() {
               Back
             </Button>
 
-            {step < 3 ? (
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-between">
               <Button
                 type="button"
-                onClick={goNext}
-                disabled={!canContinue || isSending}
+                variant="outline"
+                onClick={goBack}
+                disabled={step === 1 || isSending || isComplete}
               >
-                {isSending ? <Loader2 className="animate-spin" /> : null}
-                Continue
-                <ChevronRight />
+                <ChevronLeft />
+                Back
               </Button>
-            ) : (
-              <Button type="submit" disabled={!canContinue || isComplete}>
-                {isComplete ? <BadgeCheck /> : <MailCheck />}
-                Verify email
-              </Button>
-            )}
-          </div>
-        </form>
+
+              {step < 3 ? (
+                <Button
+                  type="button"
+                  onClick={goNext}
+                  disabled={!canContinue || isSending}
+                >
+                  {isSending ? <Loader2 className="animate-spin" /> : null}
+                  Continue
+                  <ChevronRight />
+                </Button>
+              ) : (
+                <Button type="submit" disabled={!canContinue || isComplete}>
+                  {isComplete ? <BadgeCheck /> : <MailCheck />}
+                  Verify email
+                </Button>
+              )}
+            </div>
+          </form>
+        </Card>
       </section>
     </main>
   );

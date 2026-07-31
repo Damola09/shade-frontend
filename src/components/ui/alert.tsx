@@ -7,6 +7,7 @@ const alertVariants = cva("rounded-lg border p-3 text-sm", {
   variants: {
     variant: {
       default: "bg-card text-card-foreground",
+      default: "border-border bg-card text-card-foreground",
       destructive: "border-destructive/30 bg-destructive/10 text-destructive",
     },
   },
@@ -23,6 +24,8 @@ const Alert = React.forwardRef<
     ref={ref}
     data-slot="alert"
     role="alert"
+    role="alert"
+    data-slot="alert"
     className={cn(alertVariants({ variant, className }))}
     {...props}
   />
@@ -30,4 +33,32 @@ const Alert = React.forwardRef<
 
 Alert.displayName = "Alert";
 
-export { Alert, alertVariants };
+const AlertTitle = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    data-slot="alert-title"
+    className={cn("font-semibold leading-6", className)}
+    {...props}
+  />
+));
+
+AlertTitle.displayName = "AlertTitle";
+
+const AlertDescription = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    data-slot="alert-description"
+    className={className}
+    {...props}
+  />
+));
+
+AlertDescription.displayName = "AlertDescription";
+
+export { Alert, AlertTitle, AlertDescription, alertVariants };
