@@ -3,6 +3,53 @@
 import { BadgeCheck, WalletCards } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import {
+  getMerchantProfile,
+  MERCHANT_SESSION_KEY,
+} from "@/lib/merchant-storage";
+
+type AuthStatus = "idle" | "connecting" | "signing" | "verified" | "error";
+
+type WalletSession = {
+  address: string;
+  challenge: string;
+  signature: string;
+  signedAt: string;
+};
+
+function createChallenge(address: string) {
+  const issuedAt = new Date().toISOString();
+  const nonce =
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+  return [
+    "Shade Merchant Sign In",
+    "",
+    "Sign this message to prove you control this Stellar wallet.",
+    "This request will not move funds or create a transaction.",
+    "",
+    `Wallet: ${address}`,
+    `Nonce: ${nonce}`,
+    `Issued At: ${issuedAt}`,
+  ].join("\n");
+}
+
+// async function verifySignedMessage(
+//   challenge: string,
+//   signedMessage: string,
+//   signerAddress: string,
+// ) {
+//   const { Keypair } = await import("@stellar/stellar-sdk");
+//   const keypair = Keypair.fromPublicKey(signerAddress);
+//   const messageBytes = Buffer.from(challenge, "utf8");
+//   const signatureBytes = Buffer.from(signedMessage, "base64");
+//
+//   return keypair.verify(messageBytes, signatureBytes);
+// }
 import { WalletConnectButton } from "@/components/wallet-connect-button";
 import { useWalletConnect } from "@/hooks/use-wallet-connect";
 import { getMerchantProfile } from "@/lib/merchant-storage";
@@ -37,9 +84,9 @@ export function SignInClient() {
 
         <div className="rounded-lg border bg-card p-6 shadow-sm">
           {error ? (
-            <div className="mb-4 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-              {error}
-            </div>
+            <Alert variant="destructive" className="mb-4">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
           ) : null}
 
           {session ? (

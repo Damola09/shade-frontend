@@ -21,6 +21,7 @@ import {
   UserRound,
 } from "lucide-react";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -456,9 +457,9 @@ export function RegisterClient() {
           ) : null}
 
           {error ? (
-            <div className="mt-5 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-              {error}
-            </div>
+            <Alert variant="destructive" className="mt-5">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
           ) : null}
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-between">
