@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   getMerchantProfile,
   MERCHANT_SESSION_KEY,
@@ -82,7 +83,7 @@ export function SignInClient() {
           </p>
         </div>
 
-        <div className="rounded-lg border bg-card p-6 shadow-sm">
+        <Card>
           {error ? (
             <Alert variant="destructive" className="mb-4">
               <AlertDescription>{error}</AlertDescription>
