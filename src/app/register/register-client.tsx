@@ -21,9 +21,10 @@ import {
   UserRound,
 } from "lucide-react";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Select } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   getMerchantSessionAddress,
   saveMerchantProfile,
@@ -330,6 +331,103 @@ export function RegisterClient() {
                   Step {step} of 3
                 </p>
               </div>
+            ) : null}
+            <div>
+              <p className="text-lg font-bold">
+                {step === 1 && "Personal details"}
+                {step === 2 && "Business details"}
+                {step === 3 && "Email verification"}
+              </p>
+              <p className="text-sm text-muted-foreground">Step {step} of 3</p>
+            </div>
+          </div>
+
+          {step === 1 ? (
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="grid gap-2 text-sm font-medium">
+                First name
+                <Input
+                  value={values.firstName}
+                  onChange={(event) =>
+                    updateField("firstName", event.target.value)
+                  }
+                  required
+                />
+              </label>
+              <label className="grid gap-2 text-sm font-medium">
+                Last name
+                <Input
+                  value={values.lastName}
+                  onChange={(event) =>
+                    updateField("lastName", event.target.value)
+                  }
+                  required
+                />
+              </label>
+              <label className="grid gap-2 text-sm font-medium sm:col-span-2">
+                Email address
+                <Input
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  value={values.email}
+                  onChange={(event) => updateField("email", event.target.value)}
+                  required
+                />
+              </label>
+            </div>
+          ) : null}
+
+          {step === 2 ? (
+            <div className="grid gap-4">
+              <label className="grid gap-2 text-sm font-medium">
+                Business name
+                <input
+                  className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  value={values.businessName}
+                  onChange={(event) =>
+                    updateField("businessName", event.target.value)
+                  }
+                  required
+                />
+              </label>
+              <label className="grid gap-2 text-sm font-medium">
+                Business logo
+                <input
+                  className="rounded-md border bg-background px-3 py-2 text-sm outline-none file:mr-3 file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-2 file:text-sm file:font-semibold file:text-primary"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleLogoChange}
+                />
+              </label>
+              <label className="grid gap-2 text-sm font-medium">
+                Business category
+                <select
+                  className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  value={values.businessCategory}
+                  onChange={(event) =>
+                    updateField("businessCategory", event.target.value)
+                  }
+                  required
+                >
+                  <option value="">Select category</option>
+                  {categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="grid gap-2 text-sm font-medium">
+                Business description
+                <Textarea
+                  value={values.businessDescription}
+                  onChange={(event) =>
+                    updateField("businessDescription", event.target.value)
+                  }
+                  required
+                />
+              </label>
             </div>
 
             {step === 1 ? (
@@ -422,50 +520,22 @@ export function RegisterClient() {
               </div>
             ) : null}
 
-            {step === 3 ? (
-              <div className="grid gap-4">
-                <div className="rounded-lg border bg-secondary/60 p-4 text-sm text-muted-foreground">
-                  A verification code was sent to{" "}
-                  <span className="font-semibold text-foreground">
-                    {values.email}
-                  </span>
-                  . Demo code:{" "}
-                  <span className="font-mono font-bold text-primary">
-                    {otpCode}
-                  </span>
-                </div>
-                <label className="grid gap-2 text-sm font-medium">
-                  OTP code
-                  <div className="grid w-fit max-w-full grid-cols-6 gap-2">
-                    {Array.from({ length: 6 }).map((_, index) => (
-                      <input
-                        key={index}
-                        ref={(element) => {
-                          otpInputRefs.current[index] = element;
-                        }}
-                        aria-label={`OTP digit ${index + 1}`}
-                        className="size-11 rounded-md border bg-background text-center font-mono text-lg font-semibold outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 sm:size-12"
-                        inputMode="numeric"
-                        maxLength={1}
-                        value={otpInput[index] ?? ""}
-                        onChange={(event) =>
-                          updateOtpDigit(index, event.target.value)
-                        }
-                        onKeyDown={(event) => handleOtpKeyDown(index, event)}
-                        onPaste={handleOtpPaste}
-                        required
-                      />
-                    ))}
-                  </div>
-                </label>
-              </div>
-            ) : null}
+          {error ? (
+            <Alert variant="destructive" className="mt-5">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          ) : null}
 
-            {error ? (
-              <div className="mt-5 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-                {error}
-              </div>
-            ) : null}
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-between">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={goBack}
+              disabled={step === 1 || isSending || isComplete}
+            >
+              <ChevronLeft />
+              Back
+            </Button>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-between">
               <Button
